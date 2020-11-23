@@ -22,7 +22,7 @@
 
                 <div class="col-lg-12 login-form">
                     <div class="col-lg-12 login-form">method
-                        <form onsubmit="return validateform();">
+                        <form onsubmit="return validateform(redirectToMain);">
                             <div class="form-group">
                                 <label class="form-control-label">USERNAME</label>
                                 <input type="text" class="form-control" id="txtusername" required>
@@ -49,13 +49,13 @@
             </div>
         </div>
 <script>
-    function validateform()
+    function validateform(redirectToMain)
     {
         let username = document.getElementById("txtusername").value;
         let password=document.getElementById("txtpassword").value;
         if(username=="admin"&& password=="12345")
         {
-            location ="https://aksharaa009.github.io/akshara_todolist/todolist.html";
+            redirectToMain();
         }
         else{
             alert("invalid login");
@@ -64,6 +64,11 @@
         return false;
 
 
+    }
+
+    function redirectToMain()
+    {
+        location ="https://aksharaa009.github.io/akshara_todolist/todolist.html";
     }
 </script>
 
