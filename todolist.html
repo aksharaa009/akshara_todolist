@@ -45,7 +45,7 @@ if(Boolean(objJSON[index].completed))
   IsDisabled="disabled";
 }
 tableRef.insertRow().innerHTML = 
-"<td><input type='checkbox' "+IsChecked+" "+IsDisabled+"></td>"+
+"<td><input  onchange='CheckedEvent(this,promisecheck);' type='checkbox' "+IsChecked+" "+IsDisabled+"></td>"+
 "<td>" +objJSON[index].title+ "</td>";
 index += 1;
 }
@@ -57,20 +57,45 @@ xhttp.send();
 
  // promise code begins
 var checkboxCheckedCount=0;
- var prom=new Promise(function(resolve,reject){
-    if(checkboxCheckedCount>5)
+
+function CheckedEvent(obj,callback)
+{
+  if (obj.checked) 
+  {
+    checkboxCheckedCount=checkboxCheckedCount+1;
+  }
+  else
+  {
+    if(checkboxCheckedCount>0)
     {
-      reject("More than 5 ToDo's not permitted");
+      checkboxCheckedCount=checkboxCheckedCount-1;
     }
-    else
+  }
+promisecheck().then().catch(function(e){
+alert(e);
+obj.checked=false;
+checkboxCheckedCount=5;
+ });
+ 
+}
+function promisecheck()
+{
+  return new Promise(function(resolve,reject){
+    if(checkboxCheckedCount<=5)
     {
       resolve();
     }
+    else
+    {
+      reject("More than 5 ToDo's not permitted");
+    }
  });
+}
 
- prom.then().catch(function(e){
-alert(e);
- });
+
+
+
+
 
       </script>
 </body>
